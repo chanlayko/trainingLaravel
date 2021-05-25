@@ -12,6 +12,10 @@
             <div class="">
                 <p> {{ $post -> description }} </p>
             </div>
+            <div class="" style="font-style:italic;">
+                {{ 'Category : '.$post->categories->name }}
+            </div>
+            <br>
             <div class="form-group">
                 <a href="/post" class="btn btn-success">Back</a>
             </div>

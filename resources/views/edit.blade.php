@@ -33,6 +33,14 @@
                     @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+                    <div class="form-group">
+                        <select name="category_id" id="" class="form-control">
+                        @foreach($category as $cat)
+                            <option value="{{$cat->id}}" {{$cat->id == $post->category_id? 'selected':''}}>{{$cat -> name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    
                     <div class="form-gorup">
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="/post" class="btn btn-success">Black</a>
