@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\posts;
+use App\Models\category;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data = posts::all();
+        // $data = posts::all();
         $data = posts::orderBy('id','desc')->get();
         
         return view('post',compact('data'));
@@ -28,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $category = category::orderBy('id','desc')->get();
+        return view('create',compact('category'));
     }
 
     /**
@@ -50,10 +56,8 @@ class PostController extends Controller
 
         // $post->save();
 
-        posts::create([
-            'name' => $request ->name,
-            'description' => $request->description,
-        ]);
+        $validated = $request -> validated();
+        posts::create($validated);
 
         return redirect('/post');
     }
@@ -66,8 +70,6 @@ class PostController extends Controller
      */
     public function show(posts $post)
     {
-        dd($post->categories);
-
         return view('show',compact('post'));
     }
 
@@ -79,7 +81,8 @@ class PostController extends Controller
      */
     public function edit(posts $post)
     {
-        return view('edit',compact('post'));
+        $category = category::orderBy('id','desc')->get();
+        return view('edit',compact('post','category'));
     }
 
     /**
@@ -100,11 +103,8 @@ class PostController extends Controller
         // $post->description = $request->description;
 
         // $post->save();
-
-        $post -> update([
-            'name'=>$request -> name,
-            'description'=>$request->description,
-        ]);
+        $validated = $request -> validated();
+        $post -> update($validated);
 
         return redirect('/post');
     }
