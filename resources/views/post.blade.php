@@ -3,7 +3,7 @@
 @section('contant')
     <div class="card">
         <div class="card-header">
-            <h3>Post Contant <a href="/post/create" class="btn btn-success">New Post</a> <a href="logout" class="btn btn-primary">Logout</a></h3>
+            <h3>Post Contant <a href="/post/create" class="btn btn-success">New Post</a> <a href="logout" class="btn btn-primary">Logout</a> <p style="float:right;">{{Auth::user()->name}}</p></h3>
         </div>
         <div class="card-body">
             @foreach($data as $post)

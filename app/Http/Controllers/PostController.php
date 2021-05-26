@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         // $data = posts::all();
-        $data = posts::orderBy('id','desc')->get();
+        $data = posts::where('user_id',auth()->id())->orderBy('id','desc')->get();
         
         return view('post',compact('data'));
     }
@@ -69,7 +69,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(posts $post)
-    {
+    {   
+        // if($post->user_id != auth()->id()){
+        //     abort(403);
+        // }
+        $this->authorize('view',$post);
         return view('show',compact('post'));
     }
 
@@ -81,6 +85,10 @@ class PostController extends Controller
      */
     public function edit(posts $post)
     {
+        // if($post->user_id != auth()->id()){
+        //     abort(403);
+        // }
+        $this->authorize('view',$post);
         $category = category::orderBy('id','desc')->get();
         return view('edit',compact('post','category'));
     }
