@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\posts;
+use App\Mail\PostStored;
 use App\Models\category;
+use App\Mail\PostCreated;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -23,6 +26,11 @@ class PostController extends Controller
     public function index()
     {
         // $data = posts::all();
+
+        // Mail::raw('hello world',function($msg){
+        //     $msg->to('chan@gmail.com')->subject('Ap laravel lession');
+        // });
+        
         $data = posts::where('user_id',auth()->id())->orderBy('id','desc')->get();
         
         return view('post',compact('data'));
@@ -59,7 +67,10 @@ class PostController extends Controller
         // $post->save();
 
         $validated = $request -> validated();
-        posts::create($validated + ['user_id'=>Auth::user()->id]);
+        $post = posts::create($validated + ['user_id'=>Auth::user()->id]);
+
+        // Mail::to('chan@gmail.com')->send(new PostStored($post));
+        Mail::to('chan@gmail.com')->send(new PostCreated());
 
         return redirect('/post')->with('status', config('ma.massage.name'));
     }
