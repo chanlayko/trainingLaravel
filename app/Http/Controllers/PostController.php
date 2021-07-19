@@ -61,7 +61,7 @@ class PostController extends Controller
         $validated = $request -> validated();
         posts::create($validated + ['user_id'=>Auth::user()->id]);
 
-        return redirect('/post')->with('status', 'Profile updated!');
+        return redirect('/post')->with('status', config('ma.massage.name'));
     }
 
     /**
