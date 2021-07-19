@@ -70,7 +70,7 @@ class PostController extends Controller
         $post = posts::create($validated + ['user_id'=>Auth::user()->id]);
 
         // Mail::to('chan@gmail.com')->send(new PostStored($post));
-        Mail::to('chan@gmail.com')->send(new PostCreated());
+        // Mail::to('chan@gmail.com')->send(new PostCreated());
 
         return redirect('/post')->with('status', config('ma.massage.name'));
     }
