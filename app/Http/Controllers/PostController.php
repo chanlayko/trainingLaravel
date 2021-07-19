@@ -6,6 +6,8 @@ use App\Models\posts;
 use App\Models\category;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -57,9 +59,9 @@ class PostController extends Controller
         // $post->save();
 
         $validated = $request -> validated();
-        posts::create($validated);
+        posts::create($validated + ['user_id'=>Auth::user()->id]);
 
-        return redirect('/post');
+        return redirect('/post')->with('status', 'Profile updated!');
     }
 
     /**
@@ -112,9 +114,9 @@ class PostController extends Controller
 
         // $post->save();
         $validated = $request -> validated();
-        $post -> update($validated);
+        $post -> update($validated + ['user_id'=>Auth::user()->id]);
 
-        return redirect('/post');
+        return redirect('/post')->with('upstate','Update sussessfully.');
     }
 
     /**

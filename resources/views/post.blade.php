@@ -5,6 +5,12 @@
         <div class="card-header">
             <h3>Post Contant <a href="/post/create" class="btn btn-success">New Post</a> <a href="logout" class="btn btn-primary">Logout</a> <p style="float:right;">{{Auth::user()->name}}</p></h3>
         </div>
+        @if (session('status'))
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> {{ session('status') }}.
+            </div>
+        @endif
         <div class="card-body">
             @foreach($data as $post)
                 <div class="">
