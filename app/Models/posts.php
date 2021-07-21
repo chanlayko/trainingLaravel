@@ -21,10 +21,10 @@ class posts extends Model
         return $this->belongsTo('App\Models\category','category_id');
     }
 
-    protected static function booted()
-    {
-        // static::created(function ($post) {
-        //     Mail::to('chan@gmail.com')->send(new PostStored($post));
-        // });
-    }
+    // protected static function booted()
+    // {
+    //     // static::created(function ($post) {
+    //     //     Mail::to('chan@gmail.com')->send(new PostStored($post));
+    //     // });
+    // }
 }

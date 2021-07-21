@@ -7,6 +7,7 @@ use App\Mail\PostStored;
 use App\Models\category;
 use App\Mail\PostCreated;
 use Illuminate\Http\Request;
+use App\Events\PostCreateEvent;
 use App\Http\Requests\PostRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +78,7 @@ class PostController extends Controller
 
         // Mail::to('chan@gmail.com')->send(new PostStored($post));
         // Mail::to('chan@gmail.com')->send(new PostCreated());
-
+        event(new PostCreateEvent($post));
 
         return redirect('/post')->with('status', config('ma.massage.name'));
     }
