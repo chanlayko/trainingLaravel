@@ -11,6 +11,8 @@ use App\Http\Requests\PostRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\Postnotification;
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -30,6 +32,10 @@ class PostController extends Controller
         // Mail::raw('hello world',function($msg){
         //     $msg->to('chan@gmail.com')->subject('Ap laravel lession');
         // });
+        $user = Auth::user();
+        $user->notify(new Postnotification());
+
+        // Notification::send(Auth::user(), new Postnotification());
         
         $data = posts::where('user_id',auth()->id())->orderBy('id','desc')->get();
         
@@ -71,6 +77,7 @@ class PostController extends Controller
 
         // Mail::to('chan@gmail.com')->send(new PostStored($post));
         // Mail::to('chan@gmail.com')->send(new PostCreated());
+
 
         return redirect('/post')->with('status', config('ma.massage.name'));
     }
